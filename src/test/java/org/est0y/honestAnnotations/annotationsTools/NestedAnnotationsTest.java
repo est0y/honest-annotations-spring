@@ -1,12 +1,10 @@
-package human.est0y.honestAnnotations.annotationsTools;
+package org.est0y.honestAnnotations.annotationsTools;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.lang.annotation.*;
 import java.util.stream.Stream;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class NestedAnnotationsTest {
     @Target({ElementType.TYPE})

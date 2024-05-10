@@ -1,7 +1,6 @@
-package human.est0y.honestAnnotations.annotationsTools;
+package org.est0y.honestAnnotations.annotationsTools;
 
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 import java.lang.annotation.Annotation;
 import java.util.ArrayList;
@@ -10,8 +9,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-@RequiredArgsConstructor
-@Service
+
+@Component
 public class NestedAnnotations {
 
     public <T extends Annotation> List<T> getNestedAnnotation(Annotation annotation,
