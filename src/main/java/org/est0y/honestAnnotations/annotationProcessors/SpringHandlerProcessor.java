@@ -15,9 +15,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Component;
 
-import java.lang.reflect.Method;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -68,7 +66,6 @@ public class SpringHandlerProcessor implements BeanPostProcessor {
             for (String handlerBeanName : handlersBeanNames) {
                 var handler = applicationContext.getBean(handlerBeanName);
                 try {
-                    log.info(Arrays.stream(handler.getClass().getMethods()).map(Method::getName).toList().toString());
                     var method = handler.getClass().getMethod("handle", Object.class, String.class);
                     bean = method.invoke(handler, bean, beanName);
                 } catch (Exception e) {
