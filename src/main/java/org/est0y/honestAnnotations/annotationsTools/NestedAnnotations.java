@@ -13,35 +13,68 @@ import java.util.Set;
 @Component
 public class NestedAnnotations {
 
-    public <T extends Annotation> List<T> getNestedAnnotation(Annotation annotation,
-                                                              Class<T> expectedAnnotation) {
-        var annotations = annotation.annotationType().getAnnotations();
-        Set<Class<? extends Annotation>> visitedAnnotations = new HashSet<>();
-        var result = new ArrayList<Annotation>();
-        for (var nestedAnnotation : annotations) {
-            result.addAll(isPresent(nestedAnnotation, expectedAnnotation, result, visitedAnnotations));
-        }
-        return (List<T>) result;
+    public <T extends Annotation> List<T> findNestedAnnotations(Annotation annotation, Class<T> targetAnnotation) {
+
+        return findParentAnnotations(annotation, targetAnnotation).stream().map(a -> a.annotationType()
+                .getAnnotation(targetAnnotation)).toList();
     }
 
+    public boolean hasNestedAnnotation(Annotation annotation, Class<? extends Annotation> targetAnnotation) {
+        return !findNestedAnnotations(annotation, targetAnnotation).isEmpty();
+    }
 
-    private List<Annotation> isPresent(Annotation annotation,
-                                       Class<? extends Annotation> expectedAnnotation,
-                                       List<Annotation> result,
-                                       Set<Class<? extends Annotation>> visitedAnnotations) {
-        Class<? extends Annotation> annotationType = annotation.annotationType();
-
-        if (annotationType.equals(expectedAnnotation)) {
-            result.add(annotation);
-        } else {
-            visitedAnnotations.add(annotationType);
+    public List<Annotation> findParentAnnotations(Annotation annotation, Class<? extends Annotation> targetAnnotation) {
+        Annotation[] annotations = annotation.annotationType().getAnnotations();
+        Set<Class<? extends Annotation>> visitedAnnotations = new HashSet<>();
+        List<Annotation> parentAnnotations = new ArrayList<>();
+        for (Annotation nestedAnnotation : annotations) {
+            parentAnnotations.addAll(searchParentAnnotations(annotation, nestedAnnotation,
+                    targetAnnotation, parentAnnotations, visitedAnnotations));
         }
-        for (var nestedAnnotation : annotation.annotationType().getAnnotations()) {
+        return parentAnnotations;
+    }
+
+    private List<Annotation> searchAnnotations(Annotation currentAnnotation,
+                                               Class<? extends Annotation> targetAnnotation,
+                                               List<Annotation> foundAnnotations,
+                                               Set<Class<? extends Annotation>> visitedAnnotations) {
+        Class<? extends Annotation> currentAnnotationType = currentAnnotation.annotationType();
+
+        if (currentAnnotationType.equals(targetAnnotation)) {
+            foundAnnotations.add(currentAnnotation);
+        } else {
+            visitedAnnotations.add(currentAnnotationType);
+        }
+        for (Annotation nestedAnnotation : currentAnnotation.annotationType().getAnnotations()) {
             if (visitedAnnotations.contains(nestedAnnotation.annotationType())) {
                 continue;
             }
-            result.addAll(isPresent(nestedAnnotation, expectedAnnotation, result, visitedAnnotations));
+            foundAnnotations.addAll(searchAnnotations(nestedAnnotation, targetAnnotation, foundAnnotations,
+                    visitedAnnotations));
+        }
+        return Collections.emptyList();
+    }
+
+    private List<Annotation> searchParentAnnotations(Annotation parentAnnotation,
+                                                     Annotation currentAnnotation,
+                                                     Class<? extends Annotation> targetAnnotation,
+                                                     List<Annotation> parentAnnotations,
+                                                     Set<Class<? extends Annotation>> visitedAnnotations) {
+        Class<? extends Annotation> currentAnnotationType = currentAnnotation.annotationType();
+
+        if (currentAnnotationType.equals(targetAnnotation)) {
+            parentAnnotations.add(parentAnnotation);
+        } else {
+            visitedAnnotations.add(currentAnnotationType);
+        }
+        for (Annotation nestedAnnotation : currentAnnotation.annotationType().getAnnotations()) {
+            if (visitedAnnotations.contains(nestedAnnotation.annotationType())) {
+                continue;
+            }
+            parentAnnotations.addAll(searchParentAnnotations(currentAnnotation, nestedAnnotation, targetAnnotation,
+                    parentAnnotations, visitedAnnotations));
         }
         return Collections.emptyList();
     }
 }
+

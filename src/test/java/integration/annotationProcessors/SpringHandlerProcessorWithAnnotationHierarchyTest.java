@@ -1,5 +1,6 @@
 package integration.annotationProcessors;
 
+import org.est0y.honestAnnotations.annotationProcessors.BeanFactoryPostProcessorResolver;
 import org.est0y.honestAnnotations.annotationProcessors.SpringHandlerProcessor;
 import org.est0y.honestAnnotations.annotations.SpringHandler;
 import org.est0y.honestAnnotations.annotationsTools.AnnotationFinder;
@@ -19,6 +20,7 @@ import java.util.List;
 @SpringBootTest(classes = {
         AnnotationFinder.class,
         NestedAnnotations.class,
+        BeanFactoryPostProcessorResolver.class,
         SpringHandlerProcessor.class,
         Handler1.class,
         Handler2.class,

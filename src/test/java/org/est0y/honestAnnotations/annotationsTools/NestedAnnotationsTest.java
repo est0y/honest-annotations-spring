@@ -7,6 +7,13 @@ import java.lang.annotation.*;
 import java.util.stream.Stream;
 
 class NestedAnnotationsTest {
+
+    private static class Handler1 {
+    }
+
+    private static class Handler2 {
+    }
+
     @Target({ElementType.TYPE})
     @Retention(RetentionPolicy.RUNTIME)
     private @interface NestedAnnotation {
@@ -15,7 +22,7 @@ class NestedAnnotationsTest {
 
     @Target({ElementType.TYPE, ElementType.METHOD})
     @Retention(RetentionPolicy.RUNTIME)
-    @NestedAnnotation(MetaAnnotation.class)
+    @NestedAnnotation(Handler1.class)
     private @interface MetaAnnotation {
 
     }
@@ -23,7 +30,7 @@ class NestedAnnotationsTest {
     @Target({ElementType.TYPE, ElementType.METHOD})
     @Retention(RetentionPolicy.RUNTIME)
     @MetaAnnotation
-    @NestedAnnotation(MetaAnnotation2.class)
+    @NestedAnnotation(Handler2.class)
     private @interface MetaAnnotation2 {
 
     }
@@ -31,8 +38,8 @@ class NestedAnnotationsTest {
     @Target({ElementType.TYPE,})
     @Retention(RetentionPolicy.RUNTIME)
     @MetaAnnotation2
+    @MetaAnnotation
     private @interface TestAnnotation {
-
     }
 
 
@@ -44,8 +51,30 @@ class NestedAnnotationsTest {
     void getNestedAnnotation() {
         var nestedAnnotations = new NestedAnnotations();
         var annotation = AnnotatedClass.class.getAnnotation(TestAnnotation.class);
-        var annotationValues = nestedAnnotations.getNestedAnnotation(annotation, NestedAnnotation.class).stream()
+        var annotationValues = nestedAnnotations.findNestedAnnotations(annotation, NestedAnnotation.class).stream()
                 .map(a -> a.value().getSimpleName());
-        Assertions.assertLinesMatch(Stream.of(MetaAnnotation.class.getSimpleName(), MetaAnnotation2.class.getSimpleName()), annotationValues);
+        Assertions.assertLinesMatch(Stream.of(
+                        Handler1.class.getSimpleName(),
+                        Handler2.class.getSimpleName(),
+                        Handler1.class.getSimpleName()
+                ),
+                annotationValues
+        );
+    }
+
+    @Test
+    void getParentsAnnotations() {
+        var nestedAnnotations = new NestedAnnotations();
+        var annotation = AnnotatedClass.class.getAnnotation(TestAnnotation.class);
+        var annotationValues = nestedAnnotations.findParentAnnotations(annotation, NestedAnnotation.class).stream()
+                .map(a -> a.annotationType().getName());
+        Assertions.assertLinesMatch(Stream.of(
+                MetaAnnotation.class.getName(),
+                MetaAnnotation2.class.getName(),
+                MetaAnnotation.class.getName()
+                ),
+                annotationValues
+        );
+
     }
 }

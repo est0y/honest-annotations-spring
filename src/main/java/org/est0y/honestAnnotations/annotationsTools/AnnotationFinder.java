@@ -13,34 +13,34 @@ import java.util.List;
 @Slf4j
 public class AnnotationFinder {
 
-    public List<Annotation> getAllAnnotations(Object bean) {
-        var beanAnnotations = new ArrayList<>(Arrays.stream(bean.getClass().getAnnotations()).toList());
-        beanAnnotations.addAll(geMethodsAnnotations(bean));
-        beanAnnotations.addAll(getFieldsAnnotations(bean));
+    public List<Annotation> getAllAnnotations(Class<?> beanClass) {
+        var beanAnnotations = new ArrayList<>(Arrays.stream(beanClass.getAnnotations()).toList());
+        beanAnnotations.addAll(geMethodsAnnotations(beanClass));
+        beanAnnotations.addAll(getFieldsAnnotations(beanClass));
         return beanAnnotations;
     }
 
-    private List<Annotation> getFieldsAnnotations(Object bean) {
+    private List<Annotation> getFieldsAnnotations(Class<?> beanClass) {
         List<Annotation> annotations = new ArrayList<>();
-        var fields = bean.getClass().getFields();
+        var fields = beanClass.getFields();
         for (var field : fields) {
             annotations.addAll(Arrays.stream(field.getAnnotations()).toList());
         }
         return annotations;
     }
 
-    private List<Annotation> geMethodsAnnotations(Object bean) {
+    private List<Annotation> geMethodsAnnotations(Class<?> beanClass) {
         List<Annotation> annotations = new ArrayList<>();
-        var methods = bean.getClass().getMethods();
+        var methods = beanClass.getMethods();
         for (var method : methods) {
             annotations.addAll(Arrays.stream(method.getAnnotations()).toList());
         }
         return annotations;
     }
 
-    private List<Annotation> getMethodArgsAnnotation(Object bean) {
+    private List<Annotation> getMethodArgsAnnotation(Class<?> beanClass) {
         List<Annotation> annotations = new ArrayList<>();
-        var methods = bean.getClass().getMethods();
+        var methods = beanClass.getMethods();
         for (var method : methods) {
             var parameters = method.getParameters();
             for (Parameter parameter : parameters) {
