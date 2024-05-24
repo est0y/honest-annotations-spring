@@ -22,7 +22,7 @@ public class AnnotationFinder {
 
     private List<Annotation> getFieldsAnnotations(Class<?> beanClass) {
         List<Annotation> annotations = new ArrayList<>();
-        var fields = beanClass.getFields();
+        var fields = beanClass.getDeclaredFields();
         for (var field : fields) {
             annotations.addAll(Arrays.stream(field.getAnnotations()).toList());
         }
@@ -31,7 +31,7 @@ public class AnnotationFinder {
 
     private List<Annotation> geMethodsAnnotations(Class<?> beanClass) {
         List<Annotation> annotations = new ArrayList<>();
-        var methods = beanClass.getMethods();
+        var methods = beanClass.getDeclaredMethods();
         for (var method : methods) {
             annotations.addAll(Arrays.stream(method.getAnnotations()).toList());
         }
@@ -40,7 +40,7 @@ public class AnnotationFinder {
 
     private List<Annotation> getMethodArgsAnnotation(Class<?> beanClass) {
         List<Annotation> annotations = new ArrayList<>();
-        var methods = beanClass.getMethods();
+        var methods = beanClass.getDeclaredMethods();
         for (var method : methods) {
             var parameters = method.getParameters();
             for (Parameter parameter : parameters) {
