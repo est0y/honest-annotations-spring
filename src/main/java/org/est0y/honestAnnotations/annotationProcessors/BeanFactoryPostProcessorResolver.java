@@ -3,6 +3,7 @@ package org.est0y.honestAnnotations.annotationProcessors;
 import lombok.extern.slf4j.Slf4j;
 import org.est0y.honestAnnotations.annotations.AnnotationsOrder;
 import org.est0y.honestAnnotations.annotations.AfterInitialization;
+import org.est0y.honestAnnotations.annotations.BeforeInitialization;
 import org.est0y.honestAnnotations.annotationsTools.AnnotationFinder;
 import org.est0y.honestAnnotations.annotationsTools.AnnotationOrderComparator;
 import org.est0y.honestAnnotations.annotationsTools.NestedAnnotations;
@@ -38,30 +39,36 @@ public class BeanFactoryPostProcessorResolver implements BeanFactoryPostProcesso
         nestedAnnotations = beanFactory.getBean(NestedAnnotations.class);
         List<Class<? extends Annotation>> orderAnnotations = getAnnotationOrder(beanFactory);
         var comparator = new AnnotationOrderComparator(orderAnnotations);
-        Map<String, NavigableSet<Annotation>> honestAnnotationsByBeanName = new HashMap<>();
+        Map<String, NavigableSet<Annotation>> afterInitAnnotationsByBeanName = new HashMap<>();
+        Map<String, NavigableSet<Annotation>> beforeInitAnnotationsByBeanName = new HashMap<>();
         for (String beanName : beanFactory.getBeanDefinitionNames()) {
             Class<?> beanClass = beanFactory.getType(beanName);
             if (beanClass != null) {
                 List<Annotation> beanAnnotations = annotationFinder.getAllAnnotations(beanClass);
-                handleAnnotations(beanName, beanAnnotations, comparator, honestAnnotationsByBeanName);
+                handleAnnotations(beanName, beanAnnotations, comparator, beforeInitAnnotationsByBeanName,
+                        BeforeInitialization.class);
+                handleAnnotations(beanName, beanAnnotations, comparator, afterInitAnnotationsByBeanName,
+                        AfterInitialization.class);
             }
         }
-        log.info(honestAnnotationsByBeanName.toString());
+        log.info(afterInitAnnotationsByBeanName.toString());
+        log.info(beforeInitAnnotationsByBeanName.toString());
         beanFactory.registerSingleton("orderedHonestAnnotationsHolder",
-                new OrderedHonestAnnotationsHolder(honestAnnotationsByBeanName));
+                new OrderedHonestAnnotationsHolder(beforeInitAnnotationsByBeanName,afterInitAnnotationsByBeanName));
     }
 
     private void handleAnnotations(String beanName,
                                    List<Annotation> beanAnnotations,
                                    Comparator<Annotation> comparator,
-                                   Map<String, NavigableSet<Annotation>> honestAnnotationsByBeanName) {
+                                   Map<String, NavigableSet<Annotation>> honestAnnotationsByBeanName,
+                                    Class<?extends Annotation> annotationType) {
         Set<Class<? extends Annotation>> processedAnnotationTypes = new HashSet<>();
         for (Annotation beanAnnotation : beanAnnotations) {
             if (processedAnnotationTypes.contains(beanAnnotation.annotationType())) {
                 continue;
             }
             List<Annotation> parentAnnotations = nestedAnnotations
-                    .findParentAnnotations(beanAnnotation, AfterInitialization.class);
+                    .findParentAnnotations(beanAnnotation, annotationType);
             if (!parentAnnotations.isEmpty()) {
                 honestAnnotationsByBeanName.putIfAbsent(beanName, new TreeSet<>(comparator));
                 Set<Annotation> annotations = honestAnnotationsByBeanName.get(beanName);
