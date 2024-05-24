@@ -2,7 +2,7 @@ package org.est0y.honestAnnotations.annotationProcessors;
 
 import lombok.extern.slf4j.Slf4j;
 import org.est0y.honestAnnotations.annotations.AnnotationsOrder;
-import org.est0y.honestAnnotations.annotations.SpringHandler;
+import org.est0y.honestAnnotations.annotations.AfterInitialization;
 import org.est0y.honestAnnotations.annotationsTools.AnnotationFinder;
 import org.est0y.honestAnnotations.annotationsTools.AnnotationOrderComparator;
 import org.est0y.honestAnnotations.annotationsTools.NestedAnnotations;
@@ -61,7 +61,7 @@ public class BeanFactoryPostProcessorResolver implements BeanFactoryPostProcesso
                 continue;
             }
             List<Annotation> parentAnnotations = nestedAnnotations
-                    .findParentAnnotations(beanAnnotation, SpringHandler.class);
+                    .findParentAnnotations(beanAnnotation, AfterInitialization.class);
             if (!parentAnnotations.isEmpty()) {
                 honestAnnotationsByBeanName.putIfAbsent(beanName, new TreeSet<>(comparator));
                 Set<Annotation> annotations = honestAnnotationsByBeanName.get(beanName);

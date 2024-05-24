@@ -3,7 +3,7 @@ package org.est0y.honestAnnotations.annotationProcessors;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.est0y.honestAnnotations.annotations.SpringHandler;
+import org.est0y.honestAnnotations.annotations.AfterInitialization;
 import org.est0y.honestAnnotations.annotationsTools.OrderedHonestAnnotationsHolder;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanPostProcessor;
@@ -41,8 +41,9 @@ public class SpringHandlerProcessor implements BeanPostProcessor, Ordered {
             return bean;
         }
         for (Annotation honestAnnotation : honestAnnotations) {
-            SpringHandler springHandler = honestAnnotation.annotationType().getAnnotation(SpringHandler.class);
-            var handler = applicationContext.getBean(springHandler.value());
+            AfterInitialization afterInitialization = honestAnnotation.annotationType()
+                    .getAnnotation(AfterInitialization.class);
+            var handler = applicationContext.getBean(afterInitialization.value());
             bean = handler.handle(bean, beanName);
         }
         return bean;

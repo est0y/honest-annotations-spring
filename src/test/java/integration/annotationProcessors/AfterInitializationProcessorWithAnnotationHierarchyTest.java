@@ -2,7 +2,7 @@ package integration.annotationProcessors;
 
 import org.est0y.honestAnnotations.annotationProcessors.BeanFactoryPostProcessorResolver;
 import org.est0y.honestAnnotations.annotationProcessors.SpringHandlerProcessor;
-import org.est0y.honestAnnotations.annotations.SpringHandler;
+import org.est0y.honestAnnotations.annotations.AfterInitialization;
 import org.est0y.honestAnnotations.annotationsTools.AnnotationFinder;
 import org.est0y.honestAnnotations.annotationsTools.NestedAnnotations;
 import org.junit.jupiter.api.Assertions;
@@ -24,13 +24,13 @@ import java.util.List;
         SpringHandlerProcessor.class,
         Handler1.class,
         Handler2.class,
-        SpringHandlerProcessorWithAnnotationHierarchyTest.TestClass.class})
+        AfterInitializationProcessorWithAnnotationHierarchyTest.TestClass.class})
 @DirtiesContext
-class SpringHandlerProcessorWithAnnotationHierarchyTest {
+class AfterInitializationProcessorWithAnnotationHierarchyTest {
 
     @Retention(RetentionPolicy.RUNTIME)
     @Target(ElementType.TYPE)
-    @SpringHandler(Handler1.class)
+    @AfterInitialization(Handler1.class)
     public @interface UserAnnotation1 {
     }
 
@@ -42,7 +42,7 @@ class SpringHandlerProcessorWithAnnotationHierarchyTest {
 
     @Retention(RetentionPolicy.RUNTIME)
     @Target(ElementType.TYPE)
-    @SpringHandler(Handler2.class)
+    @AfterInitialization(Handler2.class)
     public @interface UserAnnotation3 {
     }
 
