@@ -33,3 +33,6 @@ out
 *.iws
 *.ipr
 *.idea
+
+#settings
+settings.xml
