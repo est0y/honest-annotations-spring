@@ -37,7 +37,8 @@ import java.lang.annotation.Target;
  * to modify its behavior.</p>
  *
  * <p>The handler specified in the {@code value} of the {@code AfterInitialization} annotation
- * will be invoked in the {@code postProcessAfterInitialization} method of the {@code SpringHandlerProcessor}.</p>
+ * will be invoked in the {@code postProcessAfterInitialization} method of the
+ * {@code HonestAnnotationsBeanPostProcessor}.</p>
  *
  * @see HonestAnnotationsBeanPostProcessor
  * @see AnnotationHandler
