@@ -1,5 +1,6 @@
 package com.est0y.honestannotations.annotationProcessors;
 
+import com.est0y.honestannotations.handlers.AnnotationHandler;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Component;
 
 import java.lang.annotation.Annotation;
 import java.util.NavigableSet;
+import java.util.function.Function;
 
 @Component
 @Slf4j
@@ -29,35 +31,29 @@ public class SpringHandlerProcessor implements BeanPostProcessor, Ordered {
     @Nullable
     public Object postProcessBeforeInitialization(@NonNull Object bean, @NonNull String beanName) throws BeansException {
         NavigableSet<Annotation> honestAnnotations = orderedHonestAnnotationsHolder.getBeforeInitAnnotations(beanName);
-        if (honestAnnotations == null) {
-            return bean;
-        }
-        if (honestAnnotations.isEmpty()) {
-            return bean;
-        }
-        for (Annotation honestAnnotation : honestAnnotations) {
-            BeforeInitialization afterInitialization = honestAnnotation.annotationType()
+        return handleHonestAnnotations(bean, beanName, honestAnnotations, (honestAnnotation -> {
+            BeforeInitialization beforeInitialization = honestAnnotation.annotationType()
                     .getAnnotation(BeforeInitialization.class);
-            var handler = applicationContext.getBean(afterInitialization.value());
-            bean = handler.handle(bean, beanName);
-        }
-        return bean;
+            return beforeInitialization.value();
+        }));
     }
 
     @Override
     @Nullable
     public Object postProcessAfterInitialization(@NonNull Object bean, @NonNull String beanName) throws BeansException {
         NavigableSet<Annotation> honestAnnotations = orderedHonestAnnotationsHolder.getAfterInitAnnotations(beanName);
-        if (honestAnnotations == null) {
-            return bean;
-        }
-        if (honestAnnotations.isEmpty()) {
-            return bean;
-        }
-        for (Annotation honestAnnotation : honestAnnotations) {
+        return handleHonestAnnotations(bean, beanName, honestAnnotations, (honestAnnotation -> {
             AfterInitialization afterInitialization = honestAnnotation.annotationType()
                     .getAnnotation(AfterInitialization.class);
-            var handler = applicationContext.getBean(afterInitialization.value());
+            return afterInitialization.value();
+        }));
+    }
+
+    private Object handleHonestAnnotations(Object bean, String beanName,
+                                           NavigableSet<Annotation> honestAnnotations,
+                                           Function<Annotation, Class<? extends AnnotationHandler>> function) {
+        for (Annotation honestAnnotation : honestAnnotations) {
+            var handler = applicationContext.getBean(function.apply(honestAnnotation));
             bean = handler.handle(bean, beanName);
         }
         return bean;
@@ -67,23 +63,4 @@ public class SpringHandlerProcessor implements BeanPostProcessor, Ordered {
     public int getOrder() {
         return Integer.MIN_VALUE;
     }
-
-/*    private Object handle(Object bean,
-                          String beanName,
-                          NavigableSet<Annotation> honestAnnotations,
-                          Class<? extends Annotation> annotationType) {
-        if (honestAnnotations == null) {
-            return bean;
-        }
-        if (honestAnnotations.isEmpty()) {
-            return bean;
-        }
-        for (Annotation honestAnnotation : honestAnnotations) {
-            var afterInitialization = honestAnnotation.annotationType()
-                    .getAnnotation(annotationType);
-            var handler = applicationContext.getBean(afterInitialization.value());
-            bean = handler.handle(bean, beanName);
-        }
-        return bean;
-    }*/
 }
