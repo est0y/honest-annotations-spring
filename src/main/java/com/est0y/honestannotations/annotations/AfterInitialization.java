@@ -12,12 +12,12 @@ import java.lang.annotation.Target;
 /**
  * Annotation to specify a handler class that will be used to process the annotated bean after its initialization.
  * <p>
- * This annotation should be used in conjunction with other custom annotations that are applied to Spring beans.
+ * This annotation should be placed inside other custom annotations that are applied to Spring beans.
  * The specified handler class should implement the {@link AnnotationHandler} interface and define the logic
  * for handling the bean after its initialization.
  * </p>
  * <p>Example usage:</p>
- * <pre>
+ * <pre><code>
  * &#64;Target({ElementType.TYPE})
  * &#64;Retention(RetentionPolicy.RUNTIME)
  * &#64;AfterInitialization(UserAnnotationHandler.class)
@@ -31,19 +31,26 @@ import java.lang.annotation.Target;
  *         System.out.println("origin method");
  *     }
  * }
- * </pre>
  *
- * <p>The {@code UserAnnotationHandler} class would be responsible for wrapping the bean in a proxy
- * to modify its behavior.</p>
+ * &#64;Component
+ * public class UserAnnotationHandler implements {@link AnnotationHandler} {
+ *     &#64;Override
+ *     public Object handle(Object bean, String beanName) {
+ *          //handle logic here
+ *          return bean;
+ *      }
+ * }
+ * </code></pre>
  *
- * <p>The handler specified in the {@code value} of the {@code AfterInitialization} annotation
+ * <p>The handler specified in the {@code value} of the {@link AfterInitialization} annotation
  * will be invoked in the {@code postProcessAfterInitialization} method of the
- * {@code HonestAnnotationsBeanPostProcessor}.</p>
+ * {@link HonestAnnotationsBeanPostProcessor}.</p>
  *
  * @see HonestAnnotationsBeanPostProcessor
  * @see AnnotationHandler
  * @see BeforeInitialization
  */
+
 @Documented
 @Target({ElementType.ANNOTATION_TYPE})
 @Retention(RetentionPolicy.RUNTIME)
