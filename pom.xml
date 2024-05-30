@@ -15,11 +15,11 @@
     <packaging>jar</packaging>
     <name>honest-annotations-spring-boot-starter</name>
     <description>library for creating declarative annotations</description>
-    <url>https://github.com/est0y/HonestAnnotations</url>
+    <url>https://github.com/est0y/honest-annotations</url>
     <licenses>
         <license>
             <name>MIT</name>
-            <url>https://github.com/est0y/HonestAnnotations/blob/main/LICENSE</url>
+            <url>https://github.com/est0y/honest-annotations/blob/main/LICENSE</url>
         </license>
     </licenses>
     <developers>
@@ -36,9 +36,9 @@
         </developer>
     </developers>
     <scm>
-        <connection>scm:git:git://github.com/est0y/HonestAnnotations.git</connection>
-        <developerConnection>scm:git:ssh://github.com:est0y/HonestAnnotations.git</developerConnection>
-        <url>https://github.com/est0y/HonestAnnotations/tree/main</url>
+        <connection>scm:git:git://github.com/est0y/honest-annotations.git</connection>
+        <developerConnection>scm:git:ssh://github.com:est0y/honest-annotations.git</developerConnection>
+        <url>https://github.com/est0y/honest-annotations/tree/main</url>
     </scm>
 
     <distributionManagement>

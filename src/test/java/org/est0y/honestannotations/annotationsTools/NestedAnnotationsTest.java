@@ -1,4 +1,4 @@
-package org.est0y.honestAnnotations.annotationsTools;
+package org.est0y.honestannotations.annotationsTools;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;

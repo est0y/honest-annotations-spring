@@ -1,13 +1,13 @@
-package org.est0y.honestAnnotations.annotationProcessors;
+package org.est0y.honestannotations.annotationProcessors;
 
 import lombok.extern.slf4j.Slf4j;
-import org.est0y.honestAnnotations.annotations.AnnotationsOrder;
-import org.est0y.honestAnnotations.annotations.AfterInitialization;
-import org.est0y.honestAnnotations.annotations.BeforeInitialization;
-import org.est0y.honestAnnotations.annotationsTools.AnnotationFinder;
-import org.est0y.honestAnnotations.annotationsTools.AnnotationOrderComparator;
-import org.est0y.honestAnnotations.annotationsTools.NestedAnnotations;
-import org.est0y.honestAnnotations.annotationsTools.OrderedHonestAnnotationsHolder;
+import org.est0y.honestannotations.annotations.AnnotationsOrder;
+import org.est0y.honestannotations.annotations.AfterInitialization;
+import org.est0y.honestannotations.annotations.BeforeInitialization;
+import org.est0y.honestannotations.annotationsTools.AnnotationFinder;
+import org.est0y.honestannotations.annotationsTools.AnnotationOrderComparator;
+import org.est0y.honestannotations.annotationsTools.NestedAnnotations;
+import org.est0y.honestannotations.annotationsTools.OrderedHonestAnnotationsHolder;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanFactoryPostProcessor;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
