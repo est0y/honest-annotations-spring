@@ -1,7 +1,7 @@
 package integration.annotationProcessors;
 
 import com.est0y.honestannotations.annotationProcessors.BeanFactoryPostProcessorResolver;
-import com.est0y.honestannotations.annotationProcessors.SpringHandlerProcessor;
+import com.est0y.honestannotations.annotationProcessors.HonestAnnotationsBeanPostProcessor;
 import com.est0y.honestannotations.annotations.AfterInitialization;
 import com.est0y.honestannotations.annotationsTools.AnnotationFinder;
 import com.est0y.honestannotations.annotationsTools.NestedAnnotations;
@@ -21,7 +21,7 @@ import java.util.List;
         AnnotationFinder.class,
         NestedAnnotations.class,
         BeanFactoryPostProcessorResolver.class,
-        SpringHandlerProcessor.class,
+        HonestAnnotationsBeanPostProcessor.class,
         Handler1.class,
         Handler2.class,
         AfterInitializationProcessorWithAnnotationHierarchyTest.TestClass.class})

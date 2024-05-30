@@ -1,7 +1,7 @@
 package com.est0y.honestannotations.config;
 
 import com.est0y.honestannotations.annotationProcessors.BeanFactoryPostProcessorResolver;
-import com.est0y.honestannotations.annotationProcessors.SpringHandlerProcessor;
+import com.est0y.honestannotations.annotationProcessors.HonestAnnotationsBeanPostProcessor;
 import com.est0y.honestannotations.annotationsTools.AnnotationFinder;
 import com.est0y.honestannotations.annotationsTools.NestedAnnotations;
 import com.est0y.honestannotations.annotationsTools.OrderedHonestAnnotationsHolder;
@@ -30,8 +30,8 @@ public class HonestAutoConfiguration {
     }
 
     @Bean
-    public SpringHandlerProcessor springHandlerProcessor(ApplicationContext applicationContext,
-                                                         OrderedHonestAnnotationsHolder holder) {
-        return new SpringHandlerProcessor(applicationContext, holder);
+    public HonestAnnotationsBeanPostProcessor springHandlerProcessor(ApplicationContext applicationContext,
+                                                                     OrderedHonestAnnotationsHolder holder) {
+        return new HonestAnnotationsBeanPostProcessor(applicationContext, holder);
     }
 }

@@ -1,11 +1,14 @@
 package com.est0y.honestannotations.annotations;
 
+import com.est0y.honestannotations.annotationProcessors.HonestAnnotationsBeanPostProcessor;
 import com.est0y.honestannotations.handlers.AnnotationHandler;
 
+import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
+
 /**
  * Annotation to specify a handler class that will be used to process the annotated bean after its initialization.
  * <p>
@@ -22,7 +25,7 @@ import java.lang.annotation.Target;
  * }
  *
  * &#64;UserAnnotation
- * &#64;Component("userClass")
+ * &#64;Component
  * public class UserClass {
  *     public void method() {
  *         System.out.println("origin method");
@@ -33,9 +36,14 @@ import java.lang.annotation.Target;
  * <p>The {@code UserAnnotationHandler} class would be responsible for wrapping the bean in a proxy
  * to modify its behavior.</p>
  *
+ * <p>The handler specified in the {@code value} of the {@code AfterInitialization} annotation
+ * will be invoked in the {@code postProcessAfterInitialization} method of the {@code SpringHandlerProcessor}.</p>
+ *
+ * @see HonestAnnotationsBeanPostProcessor
  * @see AnnotationHandler
+ * @see BeforeInitialization
  */
-
+@Documented
 @Target({ElementType.ANNOTATION_TYPE})
 @Retention(RetentionPolicy.RUNTIME)
 public @interface AfterInitialization {

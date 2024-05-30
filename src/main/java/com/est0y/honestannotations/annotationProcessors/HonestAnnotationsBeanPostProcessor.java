@@ -21,7 +21,7 @@ import java.util.function.Function;
 @Component
 @Slf4j
 @RequiredArgsConstructor
-public class SpringHandlerProcessor implements BeanPostProcessor, Ordered {
+public class HonestAnnotationsBeanPostProcessor implements BeanPostProcessor, Ordered {
 
     private final ApplicationContext applicationContext;
 
