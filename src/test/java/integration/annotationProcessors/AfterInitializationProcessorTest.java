@@ -1,10 +1,10 @@
 package integration.annotationProcessors;
 
-import org.est0y.honestannotations.annotationProcessors.BeanFactoryPostProcessorResolver;
-import org.est0y.honestannotations.annotationProcessors.SpringHandlerProcessor;
-import org.est0y.honestannotations.annotations.AfterInitialization;
-import org.est0y.honestannotations.annotationsTools.AnnotationFinder;
-import org.est0y.honestannotations.annotationsTools.NestedAnnotations;
+import com.est0y.honestannotations.annotationProcessors.BeanFactoryPostProcessorResolver;
+import com.est0y.honestannotations.annotationProcessors.SpringHandlerProcessor;
+import com.est0y.honestannotations.annotations.AfterInitialization;
+import com.est0y.honestannotations.annotationsTools.AnnotationFinder;
+import com.est0y.honestannotations.annotationsTools.NestedAnnotations;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

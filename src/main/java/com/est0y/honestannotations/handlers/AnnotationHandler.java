@@ -1,4 +1,4 @@
-package org.est0y.honestannotations.handlers;
+package com.est0y.honestannotations.handlers;
 
 public interface AnnotationHandler {
 

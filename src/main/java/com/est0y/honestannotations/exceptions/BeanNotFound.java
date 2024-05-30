@@ -1,4 +1,4 @@
-package org.est0y.honestannotations.exceptions;
+package com.est0y.honestannotations.exceptions;
 
 public class BeanNotFound extends RuntimeException {
     public BeanNotFound(String message,Exception e) {

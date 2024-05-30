@@ -1,7 +1,7 @@
 package integration.annotationProcessors;
 
 import lombok.Getter;
-import org.est0y.honestannotations.handlers.AnnotationHandler;
+import com.est0y.honestannotations.handlers.AnnotationHandler;
 
 import java.util.ArrayList;
 import java.util.List;

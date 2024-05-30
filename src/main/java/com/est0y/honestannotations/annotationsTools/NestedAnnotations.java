@@ -1,4 +1,4 @@
-package org.est0y.honestannotations.annotationsTools;
+package com.est0y.honestannotations.annotationsTools;
 
 import org.springframework.stereotype.Component;
 

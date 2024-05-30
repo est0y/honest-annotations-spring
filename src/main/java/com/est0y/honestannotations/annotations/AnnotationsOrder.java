@@ -1,4 +1,4 @@
-package org.est0y.honestannotations.annotations;
+package com.est0y.honestannotations.annotations;
 
 import java.lang.annotation.Annotation;
 import java.lang.annotation.ElementType;

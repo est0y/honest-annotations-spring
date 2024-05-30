@@ -3,10 +3,10 @@ package integration.annotationProcessors;
 import integration.annotationProcessors.annotations.UserAnnotation1;
 import integration.annotationProcessors.annotations.UserAnnotation2;
 import integration.annotationProcessors.annotations.UserAnnotation3;
-import org.est0y.honestannotations.annotationProcessors.BeanFactoryPostProcessorResolver;
-import org.est0y.honestannotations.annotationsTools.AnnotationFinder;
-import org.est0y.honestannotations.annotationsTools.NestedAnnotations;
-import org.est0y.honestannotations.annotationsTools.OrderedHonestAnnotationsHolder;
+import com.est0y.honestannotations.annotationProcessors.BeanFactoryPostProcessorResolver;
+import com.est0y.honestannotations.annotationsTools.AnnotationFinder;
+import com.est0y.honestannotations.annotationsTools.NestedAnnotations;
+import com.est0y.honestannotations.annotationsTools.OrderedHonestAnnotationsHolder;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,4 +1,4 @@
-package org.est0y.honestannotations.config;
+package com.est0y.honestannotations.config;
 
 import org.springframework.context.annotation.Import;
 

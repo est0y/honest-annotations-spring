@@ -1,6 +1,6 @@
-package org.est0y.honestannotations.annotations;
+package com.est0y.honestannotations.annotations;
 
-import org.est0y.honestannotations.handlers.AnnotationHandler;
+import com.est0y.honestannotations.handlers.AnnotationHandler;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

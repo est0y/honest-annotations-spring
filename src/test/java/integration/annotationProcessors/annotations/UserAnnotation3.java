@@ -1,7 +1,7 @@
 package integration.annotationProcessors.annotations;
 
 import integration.annotationProcessors.Handler3;
-import org.est0y.honestannotations.annotations.BeforeInitialization;
+import com.est0y.honestannotations.annotations.BeforeInitialization;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
