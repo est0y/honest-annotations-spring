@@ -53,7 +53,8 @@ public class SpringHandlerProcessor implements BeanPostProcessor, Ordered {
                                            NavigableSet<Annotation> honestAnnotations,
                                            Function<Annotation, Class<? extends AnnotationHandler>> function) {
         for (Annotation honestAnnotation : honestAnnotations) {
-            var handler = applicationContext.getBean(function.apply(honestAnnotation));
+            Class<? extends AnnotationHandler> handlerClass = function.apply(honestAnnotation);
+            var handler = applicationContext.getBean(handlerClass);
             bean = handler.handle(bean, beanName);
         }
         return bean;
