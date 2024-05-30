@@ -25,6 +25,17 @@ import java.util.Map;
 import java.util.NavigableSet;
 import java.util.Set;
 import java.util.TreeSet;
+/**
+ * This class implements {@link BeanFactoryPostProcessor} and is responsible for creating and registering
+ * an {@link OrderedHonestAnnotationsHolder} in the application context. It processes annotations on beans
+ * to categorize them into before and after initialization groups.
+ *
+ * <p>It uses {@link AnnotationFinder} to locate all annotations on beans and {@link NestedAnnotations}
+ * to handle nested annotations. The annotations are ordered based on custom logic defined in {@link AnnotationsOrder}.</p>
+ *
+ * <p>This class processes {@link AnnotationsOrder} annotations to determine the order of annotations and sorts
+ * the annotations according to the order specified in the {@link AnnotationsOrder} values.</p>
+ */
 
 @Component
 @Slf4j
