@@ -3,7 +3,11 @@ package com.est0y.honestannotations.annotations;
 import com.est0y.honestannotations.annotationProcessors.HonestAnnotationsBeanPostProcessor;
 import com.est0y.honestannotations.handlers.AnnotationHandler;
 
-import java.lang.annotation.*;
+import java.lang.annotation.Documented;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
 /**
  * Annotation to specify a handler class that will be used to process the annotated bean before its initialization.
