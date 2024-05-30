@@ -3,6 +3,7 @@ package com.est0y.honestannotations.annotationsTools;
 import lombok.RequiredArgsConstructor;
 
 import java.lang.annotation.Annotation;
+import java.util.Collections;
 import java.util.Map;
 import java.util.NavigableSet;
 
@@ -16,10 +17,12 @@ public class OrderedHonestAnnotationsHolder {
 
 
     public NavigableSet<Annotation> getBeforeInitAnnotations(String beanName) {
-        return honestAnnotationsBeforeInitialization.get(beanName);
+        var annotations = honestAnnotationsBeforeInitialization.get(beanName);
+        return annotations == null ? Collections.emptyNavigableSet() : annotations;
     }
 
     public NavigableSet<Annotation> getAfterInitAnnotations(String beanName) {
-        return honestAnnotationsAfterInitialization.get(beanName);
+        var annotations = honestAnnotationsAfterInitialization.get(beanName);
+        return annotations == null ? Collections.emptyNavigableSet() : annotations;
     }
 }
