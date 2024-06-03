@@ -2,6 +2,24 @@
 
 Honest Annotations is a library for creating declarative annotations in Spring, which simplifies annotation handling and provides more explicit control over how annotations are processed.
 
+## Installation
+
+### Maven
+
+Add the following dependency to your `pom.xml`:
+
+```xml
+<dependency>
+    <groupId>com.est0y</groupId>
+    <artifactId>honest-annotations-spring</artifactId>
+    <version>0.0.1</version>
+</dependency>
+```
+### Gradle
+```
+implementation 'com.est0y:honest-annotations-spring:0.0.1'
+```
+
 ## Quick Start
 
 ### Using with Spring (without Spring Boot)
